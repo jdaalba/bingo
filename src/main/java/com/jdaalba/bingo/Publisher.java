@@ -1,5 +1,7 @@
 package com.jdaalba.bingo;
 
+import com.jdaalba.bingo.exception.UnexpectedException;
+import com.jdaalba.bingo.messaging.EventChannel;
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Queue;
@@ -29,7 +31,7 @@ public final class Publisher implements Callable<Void> {
   public final Void call() {
     while (running.get()) {
       if (numbers.isEmpty()) {
-        throw new RuntimeException("Something is wrong");
+        throw new UnexpectedException("Something is wrong");
       }
       final var event = numbers.poll();
       System.out.println("Publishing: " + event);

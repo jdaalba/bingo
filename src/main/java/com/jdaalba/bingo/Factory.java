@@ -1,5 +1,7 @@
 package com.jdaalba.bingo;
 
+import com.jdaalba.bingo.messaging.EventChannel;
+import com.jdaalba.bingo.messaging.EventChannelImpl;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Factory {
@@ -10,7 +12,7 @@ public class Factory {
 
   static {
     running = new AtomicBoolean(true);
-    eventChannel = new EventChannel();
+    eventChannel = new EventChannelImpl();
   }
 
   public static Subscriber getSubscriber(final String name) {
