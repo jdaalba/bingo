@@ -33,21 +33,22 @@ class PublisherTest {
   }
 
   @Test
-  void executeWhenHasNoSubscribers() {
-    doNothing().when(eventChannel).add(anyInt());
-
-    assertThatThrownBy(() -> publisher.call())
-        .isExactlyInstanceOf(UnexpectedException.class)
-        .hasMessage("Something is wrong");
-  }
-
-  @Test
   void execute() {
     final Answer<Void> customAnswer = invocation -> {
       running.set(false);
       return null;
     };
     doAnswer(customAnswer).when(eventChannel).add(anyInt());
+
     assertThatCode(() -> publisher.call()).doesNotThrowAnyException();
+  }
+
+  @Test
+  void executeWhenHasNoSubscribers() {
+    doNothing().when(eventChannel).add(anyInt());
+
+    assertThatThrownBy(() -> publisher.call())
+        .isExactlyInstanceOf(UnexpectedException.class)
+        .hasMessage("Something is wrong");
   }
 }
